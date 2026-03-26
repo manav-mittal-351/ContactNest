@@ -92,3 +92,5 @@ app.listen(PORT, () => {
     console.log(`🚀 MERN Server running on http://localhost:${PORT}`);
     console.log(`📡 MongoDB is configured to: ${MONGO_URI}`);
 });
+
+module.exports = app;

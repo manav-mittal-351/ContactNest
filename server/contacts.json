@@ -14,5 +14,13 @@
     "phone": "789874654",
     "category": "Work",
     "createdAt": "2026-03-26T12:37:37.210Z"
+  },
+  {
+    "_id": "1774529570388",
+    "name": "sagar",
+    "email": "sagar@gmail.com",
+    "phone": "786434697",
+    "category": "Friends",
+    "createdAt": "2026-03-26T12:52:50.388Z"
   }
 ]
