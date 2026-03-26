@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Contacts | MERN Stack</title>
+    <!-- React & Babel CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --primary-light: #e0e7ff;
+            --bg-page: #f9fafb;
+            --bg-card: #ffffff;
+            --border: #e5e7eb;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --input-focus: #4f46e5;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body.dark {
+            --bg-page: #030712;
+            --bg-card: #111827;
+            --border: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --input-focus: #6366f1;
+            --primary: #6366f1;
+            --primary-light: rgba(99, 102, 241, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background-color 0.4s, border-color 0.4s; }
+        
+        body { background-color: var(--bg-page); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; line-height: 1.6; }
+        #root { width: 100%; max-width: 1100px; padding: 60px 24px; }
+
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+        .logo-section h1 { font-size: 1.875rem; font-weight: 800; letter-spacing: -0.025em; color: var(--text-main); }
+        .logo-section p { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
+
+        .theme-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+        .theme-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+        .main-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 32px; box-shadow: var(--shadow-md); margin-bottom: 48px; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 32px; }
+        .form-label { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 8px; display: block; }
+
+        .input-field {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: 0.2s;
+        }
+        .input-field:focus { outline: none; border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+
+        select.input-field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14a.5.5 0 0 0 .506 0l3.415-4.406a.5.5 0 0 0-.393-.804H5.23a.5.5 0 0 0-.393.804l3.415 4.406z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; cursor: pointer; }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .primary-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .search-wrap { position: relative; margin: 48px 0 32px; }
+        .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); opacity: 0.7; }
+        .search-bar { padding-left: 48px; border-radius: 12px; height: 50px; background: var(--bg-card); box-shadow: var(--shadow-sm); font-size: 1rem; }
+
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .contact-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+        .card-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .detail { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 6px; }
+        .detail svg { opacity: 0.6; }
+
+        .tag-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+            text-transform: uppercase;
+            width: fit-content;
+            margin-top: 14px;
+        }
+
+        .card-actions { display: flex; gap: 12px; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px; }
+        .action-link {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-link:hover { color: var(--primary); }
+        .delete-link:hover { color: #ef4444; }
+
+        /* Modal Redesign */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .modal { background: var(--bg-card); border-radius: 14px; padding: 32px; width: 90%; max-width: 400px; box-shadow: var(--shadow-lg); }
+        .modal h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; }
+        .modal p { color: var(--text-muted); margin-bottom: 32px; }
+        .modal-btns { display: flex; gap: 12px; justify-content: flex-end; }
+        .btn-m { padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; }
+        .m-cancel { background: #f3f4f6; color: #1f2937; }
+        .m-delete { background: #ef4444; color: white; }
+
+        .empty-view { text-align: center; color: var(--text-muted); padding: 60px 0; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Custom Icon wrapper to ensure SVG consistency
+        const Icon = ({ name, size = 18 }) => {
+            return <i data-lucide={name} style={{ width: size, height: size }}></i>;
+        };
+
+        const App = () => {
+            const [contacts, setContacts] = useState([]);
+            const [form, setForm] = useState({ name: '', email: '', phone: '', category: 'General' });
+            const [editingId, setEditingId] = useState(null);
+            const [search, setSearch] = useState('');
+            const [loading, setLoading] = useState(true);
+            const [dark, setDark] = useState(() => localStorage.getItem('theme') === 'dark');
+            const [modal, setModal] = useState({ show: false, id: null });
+
+            useEffect(() => {
+                fetchContacts();
+            }, []);
+
+            // Handle Lucide Icons initialization
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [contacts, loading, editingId, dark, modal]);
+
+            useEffect(() => {
+                if (dark) { document.body.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
+                else { document.body.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
+            }, [dark]);
+
+            const fetchContacts = async () => {
+                setLoading(true);
+                try {
+                    const { data } = await axios.get('/api/contacts');
+                    setContacts(data);
+                } catch (e) { console.error(e); }
+                setLoading(false);
+            };
+
+            const onSubmit = async (e) => {
+                e.preventDefault();
+                try {
+                    if (editingId) await axios.put(`/api/contacts/${editingId}`, form);
+                    else await axios.post('/api/contacts', form);
+                    setForm({ name: '', email: '', phone: '', category: 'General' });
+                    setEditingId(null);
+                    fetchContacts();
+                } catch (e) { alert('Operation failed'); }
+            };
+
+            const onDelete = async () => {
+                try {
+                    await axios.delete(`/api/contacts/${modal.id}`);
+                    setModal({ show: false, id: null });
+                    fetchContacts();
+                } catch (e) { alert('Delete failed'); }
+            };
+
+            const filtered = contacts.length > 0 && Array.isArray(contacts) ? contacts.filter(c => 
+                (c.name || '').toLowerCase().includes(search.toLowerCase()) || 
+                (c.email || '').toLowerCase().includes(search.toLowerCase())
+            ) : [];
+
+            return (
+                <div className="container">
+                    <header className="app-header">
+                        <div className="logo-section">
+                            <h1>Contacts Hub</h1>
+                            <p>Professional MERN Stack Directory</p>
+                        </div>
+                        <button className="theme-btn" onClick={() => setDark(!dark)}>
+                            {dark ? <Icon name="sun" /> : <Icon name="moon" />}
+                        </button>
+                    </header>
+
+                    <div className="main-card">
+                        <form onSubmit={onSubmit}>
+                            <div className="form-grid">
+                                <div>
+                                    <label className="form-label">Full Name</label>
+                                    <input className="input-field" placeholder="John Doe" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+                                </div>
+                                <div>
+                                    <label className="form-label">Email Address</label>
+                                    <input className="input-field" type="email" placeholder="john@example.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
+                                </div>
+                                <div>
+                                    <label className="form-label">Phone</label>
+                                    <input className="input-field" placeholder="+1 (555) 000-0000" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} required />
+                                </div>
+                                <div>
+                                    <label className="form-label">Category</label>
+                                    <select className="input-field" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+                                        <option>General</option><option>Work</option><option>Family</option><option>Friends</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button className="primary-btn" type="submit">
+                                <Icon name={editingId ? "save" : "plus"} />
+                                {editingId ? 'Save Contact' : 'Create Contact'}
+                            </button>
+                            {editingId && <button type="button" className="action-link" style={{display: 'inline-block', marginLeft: '16px'}} onClick={() => { setEditingId(null); setForm({name:'', email:'', phone:'', category:'General'}); }}>Cancel</button>}
+                        </form>
+                    </div>
+
+                    <div className="search-wrap">
+                        <div className="search-icon"><Icon name="search" /></div>
+                        <input className="input-field search-bar" placeholder="Search your contacts directory..." value={search} onChange={e => setSearch(e.target.value)} />
+                    </div>
+
+                    {loading ? <div className="empty-view">Retrieving information...</div> : 
+                     filtered.length === 0 ? <div className="empty-view">No contacts available to display.</div> :
+                     <div className="contact-grid">
+                        {filtered.map(c => (
+                            <div key={c._id} className="contact-card">
+                                <div>
+                                    <div className="card-title">{c.name}</div>
+                                    <div className="detail"><Icon name="mail" size={14} /> {c.email}</div>
+                                    <div className="detail"><Icon name="phone" size={14} /> {c.phone}</div>
+                                    <div className="tag-badge">{c.category}</div>
+                                </div>
+                                <div className="card-actions">
+                                    <button className="action-link" onClick={() => { setForm(c); setEditingId(c._id); window.scrollTo({top: 0, behavior: 'smooth'}); }}>
+                                        <Icon name="edit-2" size={14} /> Edit
+                                    </button>
+                                    <button className="action-link delete-link" onClick={() => setModal({ show: true, id: c._id })}>
+                                        <Icon name="trash-2" size={14} /> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                     </div>
+                    }
+
+                    {modal.show && (
+                        <div className="overlay">
+                            <div className="modal">
+                                <h2>Delete entry?</h2>
+                                <p>This contact will be permanently removed from your MERN database.</p>
+                                <div className="modal-btns">
+                                    <button className="btn-m m-cancel" onClick={() => setModal({ show: false, id: null })}>Cancel</button>
+                                    <button className="btn-m m-delete" onClick={onDelete}>Delete Permanently</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

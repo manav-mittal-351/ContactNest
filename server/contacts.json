@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "1774526099102",
+    "name": "simble",
+    "email": "simble@gmail.com",
+    "phone": "78676869",
+    "category": "General",
+    "createdAt": "2026-03-26T11:54:59.102Z"
+  },
+  {
+    "_id": "1774528657210",
+    "name": "aryan",
+    "email": "aryan@gmail.com",
+    "phone": "789874654",
+    "category": "Work",
+    "createdAt": "2026-03-26T12:37:37.210Z"
+  }
+]

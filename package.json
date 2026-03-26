@@ -1,0 +1,18 @@
+{
+  "name": "inglu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run server",
+    "server": "cd server && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
