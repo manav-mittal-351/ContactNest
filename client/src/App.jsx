@@ -180,7 +180,7 @@ function App() {
             <div key={c._id} className="contact-card">
               <div>
                 <div className="card-title">{c.name}</div>
-                <div className="detail"><Mail size={14} /> {c.email}</div>
+                {c.email && <div className="detail"><Mail size={14} /> {c.email}</div>}
                 <div className="detail"><Phone size={14} /> {c.phone}</div>
                 <div className="tag-badge">{c.category}</div>
               </div>
