@@ -3,7 +3,7 @@ import axios from 'axios';
 import { User, Mail, Phone, Tag, Trash2, Edit3, Plus, Search } from 'lucide-react';
 import './index.css';
 
-const API_URL = 'http://localhost:5000/api/contacts';
+const API_URL = '/api/contacts';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -23,6 +23,7 @@ function App() {
       setLoading(false);
     } catch (err) {
       console.error('Error fetching contacts:', err);
+      alert('Could not fetch contacts. Please check if the server is running.');
       setLoading(false);
     }
   };
@@ -135,8 +136,8 @@ function App() {
           filteredContacts.map(contact => (
             <div key={contact._id} className="contact-card">
               <h3>{contact.name}</h3>
-              <p><Mail size={14} inline /> {contact.email}</p>
-              <p><Phone size={14} inline /> {contact.phone}</p>
+              <p><Mail size={14} className="inline mr-1" /> {contact.email}</p>
+              <p><Phone size={14} className="inline mr-1" /> {contact.phone}</p>
               <span className="tag">{contact.category}</span>
               <div className="actions">
                 <button 

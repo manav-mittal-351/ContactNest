@@ -29,16 +29,37 @@ mongoose.connect(MONGO_URI)
     console.warn('   To fix this, ensure MongoDB is running or add ATLAS_URI to .env');
   });
 
+const fs = require('fs');
+const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
+
+// Helper function to read contacts from JSON
+const readLocalContacts = () => {
+  try {
+    if (!fs.existsSync(CONTACTS_FILE)) return [];
+    const data = fs.readFileSync(CONTACTS_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Error reading JSON file:', err);
+    return [];
+  }
+};
+
+// Helper function to write contacts to JSON
+const writeLocalContacts = (contacts) => {
+  try {
+    fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2));
+  } catch (err) {
+    console.error('Error writing JSON file:', err);
+  }
+};
+
 // API Routes
 // 1. Get all contacts
 app.get('/api/contacts', async (req, res) => {
   try {
     if (!dbConnected) {
-       // Do not hardcode contacts. Return empty or inform the user clearly.
-       return res.status(503).json({ 
-         message: 'Database not connected. Please check your MongoDB setup.',
-         isDisconnected: true 
-       });
+      console.log('📡 Serving from local JSON');
+      return res.json(readLocalContacts());
     }
     const contacts = await Contact.find().sort({ createdAt: -1 });
     res.json(contacts);
@@ -50,9 +71,22 @@ app.get('/api/contacts', async (req, res) => {
 // 2. Add a contact
 app.post('/api/contacts', async (req, res) => {
   const { name, email, phone, category } = req.body;
-  if (!dbConnected) return res.status(503).json({ message: 'Database not available' });
   
   try {
+    if (!dbConnected) {
+      const contacts = readLocalContacts();
+      const newContact = {
+        _id: Date.now().toString(),
+        name,
+        email,
+        phone,
+        category: category || 'General',
+        createdAt: new Date().toISOString()
+      };
+      contacts.unshift(newContact);
+      writeLocalContacts(contacts);
+      return res.status(201).json(newContact);
+    }
     const newContact = new Contact({ name, email, phone, category: category || 'General' });
     const saved = await newContact.save();
     res.status(201).json(saved);
@@ -64,7 +98,12 @@ app.post('/api/contacts', async (req, res) => {
 // 3. Delete a contact
 app.delete('/api/contacts/:id', async (req, res) => {
   try {
-    if (!dbConnected) return res.status(503).json({ message: 'Database not available' });
+    if (!dbConnected) {
+      let contacts = readLocalContacts();
+      contacts = contacts.filter(c => c._id !== req.params.id);
+      writeLocalContacts(contacts);
+      return res.json({ message: 'Contact deleted!' });
+    }
     await Contact.findByIdAndDelete(req.params.id);
     res.json({ message: 'Contact deleted!' });
   } catch (err) {
@@ -75,7 +114,15 @@ app.delete('/api/contacts/:id', async (req, res) => {
 // 4. Update a contact
 app.put('/api/contacts/:id', async (req, res) => {
   try {
-    if (!dbConnected) return res.status(503).json({ message: 'Database not available' });
+    if (!dbConnected) {
+      let contacts = readLocalContacts();
+      const index = contacts.findIndex(c => c._id === req.params.id);
+      if (index === -1) return res.status(404).json({ message: 'Contact not found' });
+      
+      contacts[index] = { ...contacts[index], ...req.body };
+      writeLocalContacts(contacts);
+      return res.json(contacts[index]);
+    }
     const updated = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
   } catch (err) {

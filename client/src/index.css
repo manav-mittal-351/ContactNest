@@ -91,23 +91,7 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-.btn-primary {
-  background: linear-gradient(90deg, var(--primary), var(--primary-hover));
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
-}
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-}
 
 .contact-list {
   display: grid;
@@ -178,6 +162,35 @@ input:focus, select:focus {
 
 .btn-delete:hover {
   color: var(--error);
+}
+
+/* Utility Classes */
+.inline {
+  display: inline-flex;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 /* Scrollbar for modern look */
