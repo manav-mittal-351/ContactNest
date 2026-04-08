@@ -17,13 +17,18 @@ const Signup = () => {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '400px', margin: '100px auto' }}>
+    <div className="container" style={{ 
+      minHeight: '80vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center'
+    }}>
       <div style={{ position: 'fixed', top: '24px', right: '24px' }}>
         <button className="theme-btn" onClick={toggleDark}>
           {dark ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
-      <div className="main-card">
+      <div className="main-card" style={{ width: '100%', maxWidth: '400px', margin: 0 }}>
         <div className="logo-section" style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h1>Sign Up</h1>
           <p>Create your account</p>
