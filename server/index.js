@@ -139,7 +139,7 @@ app.put('/api/contacts/:id', async (req, res) => {
 });
 
 // 📭 Root route / Catch-all for SPA
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
   if (fs.existsSync(clientDistPath)) {
     res.sendFile(path.join(clientDistPath, 'index.html'));
