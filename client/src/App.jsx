@@ -85,7 +85,7 @@ function App() {
       <header className="app-header">
         <div className="logo-section">
           <h1>Contacts Hub</h1>
-          <p>Professional MERN Stack Directory</p>
+          <p>Your Smart Contact Companion</p>
         </div>
         <button className="theme-btn" onClick={() => setDark(!dark)}>
           {dark ? <Sun size={18} /> : <Moon size={18} />}
@@ -113,7 +113,6 @@ function App() {
                 placeholder="john@example.com" 
                 value={form.email} 
                 onChange={e => setForm({...form, email: e.target.value})} 
-                required 
               />
             </div>
             <div>

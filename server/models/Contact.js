@@ -4,9 +4,10 @@ const ContactSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { 
     type: String, 
-    required: true,
+    required: false,
     validate: {
       validator: function(v) {
+        if (!v) return true;
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
       },
       message: props => `${props.value} is not a valid email address!`
