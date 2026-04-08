@@ -33,7 +33,7 @@ const Signup = () => {
           <h1>Sign Up</h1>
           <p>Create your account</p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="form-grid" style={{ gridTemplateColumns: '1fr' }}>
             <div>
               <label className="form-label">Name</label>
@@ -42,6 +42,7 @@ const Signup = () => {
                 value={name} 
                 onChange={e => setName(e.target.value)} 
                 required 
+                autoComplete="off"
               />
             </div>
             <div>
@@ -52,6 +53,7 @@ const Signup = () => {
                 value={email} 
                 onChange={e => setEmail(e.target.value)} 
                 required 
+                autoComplete="off"
               />
             </div>
             <div>
@@ -62,6 +64,7 @@ const Signup = () => {
                 value={password} 
                 onChange={e => setPassword(e.target.value)} 
                 required 
+                autoComplete="new-password"
               />
             </div>
           </div>

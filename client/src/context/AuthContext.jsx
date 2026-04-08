@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post('/api/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
+      axios.defaults.headers.common['x-auth-token'] = res.data.token;
       setToken(res.data.token);
       setUser(res.data.user);
       toast.success('Welcome back!');
@@ -50,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post('/api/auth/signup', { name, email, password });
       localStorage.setItem('token', res.data.token);
+      axios.defaults.headers.common['x-auth-token'] = res.data.token;
       setToken(res.data.token);
       setUser(res.data.user);
       toast.success('Account created!');
