@@ -16,7 +16,8 @@ exports.signup = async (req, res) => {
 
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
-    res.status(500).json({ message: 'Server error during signup' });
+    console.error('Signup Error:', err);
+    res.status(500).json({ message: 'Server error during signup', error: err.message });
   }
 };
 
