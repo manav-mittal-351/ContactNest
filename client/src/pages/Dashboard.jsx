@@ -19,28 +19,19 @@ import {
 const API_URL = '/api/contacts';
 
 function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user, logout, dark, toggleDark } = useAuth();
   const [contacts, setContacts] = useState([]);
   const [form, setForm] = useState({ name: '', email: '', phone: '', category: 'General' });
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const [dark, setDark] = useState(() => localStorage.getItem('theme') === 'dark');
   const [modal, setModal] = useState({ show: false, id: null });
 
   useEffect(() => {
     fetchContacts();
   }, []);
 
-  useEffect(() => {
-    if (dark) {
-      document.body.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [dark]);
+
 
   const fetchContacts = async () => {
     setLoading(true);
@@ -95,7 +86,7 @@ function Dashboard() {
           <p>Welcome, {user?.name}</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button className="theme-btn" onClick={() => setDark(!dark)}>
+          <button className="theme-btn" onClick={toggleDark}>
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button className="theme-btn" onClick={logout} title="Logout">

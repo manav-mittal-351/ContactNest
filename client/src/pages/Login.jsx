@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogIn } from 'lucide-react';
+import { LogIn, Sun, Moon } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { login, dark, toggleDark } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,6 +17,11 @@ const Login = () => {
 
   return (
     <div className="container" style={{ maxWidth: '400px', margin: '100px auto' }}>
+      <div style={{ position: 'fixed', top: '24px', right: '24px' }}>
+        <button className="theme-btn" onClick={toggleDark}>
+          {dark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+      </div>
       <div className="main-card">
         <div className="logo-section" style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h1>Login</h1>
