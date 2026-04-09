@@ -1,33 +1,81 @@
-# 📇 Modern Contacts - MERN Stack
+# 🐦 ContactNest - Smart MERN Contact Manager
 
-A simple, premium Contact Management Web App for beginners to understand MERN stack fundamentals.
+ContactNest is a production-ready, full-stack MERN application designed for seamless contact management with a premium, modern interface. It features complete user authentication, data isolation, and a beautifully themed dashboard.
 
-## 🚀 Quick Start
-
-1. **Prerequisites**
-   - Node.js installed on your machine.
-   - MongoDB installed and running locally on `mongodb://localhost:27017` (the default).
-
-2. **Installation & Running**
-   From the main folder (`INGLU`), run:
-   ```bash
-   npm install
-   npm start
-   ```
-   This will start both the **Backend (Port 5000)** and the **Frontend (Port 3000)** at once!
-
-## 📁 Project Structure
-
-- `server/`: Node.js & Express backend with Mongoose models.
-- `client/`: React frontend (Vite) with vanilla CSS for the premium UI.
-- `package.json`: Contains the script to run both simultaneously using `concurrently`.
+## 🚀 Live Demo
+- **Frontend**: [Coming Soon](http://localhost:3000)
+- **Backend API**: [Coming Soon](http://localhost:5000)
 
 ## ✨ Features
-- **Add Contacts**: Save names, emails, phones, and categories.
-- **View List**: Beautiful glassmorphism cards.
-- **Edit/Delete**: Full CRUD functionality.
-- **Search**: Instant filtering of contacts.
-- **Responsive**: Works on all screen sizes.
+- **Secure Authentication**: Signup and Login with JWT and encrypted passwords (bcryptjs).
+- **Data Isolation**: Users only see and manage their own private contacts.
+- **Full CRUD**: Create, Read, Update, and Delete contacts with ease.
+- **Real-time Search**: Instant filtering across your entire directory.
+- **Dark Mode**: Smooth toggle between light and dark themes with persistent storage.
+- **Password Visibility**: Eye toggle for secure password entry.
+- **Micro-animations**: Enhanced UX with toast notifications and smooth transitions.
+
+## 🛠️ Tech Stack
+- **Frontend**: React (Vite), Lucide Icons, React Hot Toast, Vanilla CSS.
+- **Backend**: Node.js, Express.js (MVC Architecture).
+- **Database**: MongoDB (Mongoose ODM).
+- **Security**: JSON Web Tokens (JWT), Bcrypt.js.
+
+## 📸 Screenshots
+| Login (Light) | Login (Dark) | Dashboard |
+| :---: | :---: | :---: |
+| ![Login Light](./screenshots/login-light.png) | ![Login Dark](./screenshots/login-dark.png) | ![Dashboard](./screenshots/dashboard.png) |
+
+## 📁 Project Structure
+```text
+INGLU/
+├── client/          # React (Vite) frontend application
+│   ├── src/pages/   # Dashboard, Login, Signup
+│   └── src/context/ # Auth & Theme management
+├── server/          # Node.js Express backend
+│   ├── models/      # MongoDB Schema definitions
+│   ├── controllers/ # Route logic handlers
+│   └── routes/      # API endpoint definitions
+└── package.json     # Main scripts for concurrent execution
+```
+
+## ⚙️ Installation & Setup
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/manav-mittal-351/Contacts-Management-System.git
+   cd Contacts-Management-System
+   ```
+2. **Setup Server**
+   ```bash
+   cd server
+   npm install
+   # Create a .env file and add your MONGO_URI and JWT_SECRET
+   ```
+3. **Setup Client**
+   ```bash
+   cd ../client
+   npm install
+   ```
+4. **Run Application** (from root)
+   ```bash
+   npm run dev
+   ```
+
+## 🔐 Environment Variables
+Create a `.env` file in the `/server` directory:
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+```
+
+## 🚀 API Endpoints
+- **AUTH**: `/api/auth/signup`, `/api/auth/login`, `/api/auth/user`
+- **CONTACTS**: `/api/contacts` (GET, POST, PUT, DELETE)
+
+## 👤 Author
+**Manav Mittal**  
+[GitHub Profile](https://github.com/manav-mittal-351)
 
 ---
-Built with ❤️ for beginners.
+Built with ❤️ by Manav Mittal
