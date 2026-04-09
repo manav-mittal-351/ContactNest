@@ -16,7 +16,6 @@ exports.signup = async (req, res) => {
 
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
-    console.error('Signup Error:', err);
     res.status(500).json({ message: 'Server error during signup', error: err.message });
   }
 };
@@ -35,7 +34,7 @@ exports.login = async (req, res) => {
 
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
-    res.status(500).json({ message: 'Server error during login' });
+    res.status(500).json({ message: 'Server error during login', error: err.message });
   }
 };
 
@@ -44,6 +43,6 @@ exports.getUser = async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    res.status(500).send('Server Error');
+    res.status(500).json({ message: 'Server Error fetching user', error: err.message });
   }
 };

@@ -39,7 +39,7 @@ function Dashboard() {
       const { data } = await axios.get(API_URL);
       setContacts(data);
     } catch (e) {
-      toast.error('Could not fetch contacts');
+      toast.error(e.response?.data?.message || 'Could not fetch contacts');
     }
     setLoading(false);
   };
@@ -58,7 +58,7 @@ function Dashboard() {
       setEditingId(null);
       fetchContacts();
     } catch (e) {
-      toast.error('Operation failed');
+      toast.error(e.response?.data?.message || 'Operation failed');
     }
   };
 
@@ -69,7 +69,7 @@ function Dashboard() {
       fetchContacts();
       toast.success('Contact removed');
     } catch (e) {
-      toast.error('Delete failed');
+      toast.error(e.response?.data?.message || 'Delete failed');
     }
   };
 
