@@ -28,7 +28,7 @@ ContactNest is a production-ready, full-stack MERN application designed for seam
 
 ## 📁 Project Structure
 ```text
-INGLU/
+ContactNest/
 ├── client/          # React (Vite) frontend application
 │   ├── src/pages/   # Dashboard, Login, Signup
 │   └── src/context/ # Auth & Theme management
