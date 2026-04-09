@@ -82,7 +82,7 @@ function Dashboard() {
     <div className="container">
       <header className="app-header">
         <div className="logo-section">
-          <h1>Contacts Hub</h1>
+          <h1>ContactNest</h1>
           <p>Welcome, {user?.name}</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
